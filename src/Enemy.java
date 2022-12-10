@@ -1,12 +1,16 @@
 import processing.core.PImage;
 
-public class Enemy extends Bootleg_Space_Invaders {
-    PImage sprite = loadImage("Sprites/Enemy_Ship.png");
-    this.sprite.resize(64, 64);
+public class Enemy extends Main_Advanced {
+    PImage sprite;
 
-    int x = (int)(Math.random() * (width - sprite.width));
-    int y = (int)(Math.random() * -200) - 2000;
-    int speed = (int)(Math.random() * 5) + 5;
+    int x, y, speed;
+    public Enemy() {
+        this.sprite = loadImage("Images/Sprites/Enemy_Ship.png");
+        this.sprite.resize(64, 64);
+        this.x = (int)(Math.random() * (width - sprite.width));
+        this.y = (int)(Math.random() * -200) - 2000;
+        this.speed = (int)(Math.random() * 5) + 5;
+    }
 
     public void act() {
         this.move();

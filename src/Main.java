@@ -5,7 +5,7 @@ import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 
 
-public class Bootleg_Space_Invaders extends PApplet {
+public class Main extends PApplet {
     Minim loader;
     AudioPlayer gameBgm, homeBgm, gameOverSound;
     DecimalFormat df = new DecimalFormat("#.0");
@@ -35,12 +35,12 @@ public class Bootleg_Space_Invaders extends PApplet {
         play = false;
         gameOverScreen = false;
 
-        gameOver = loadImage("Sprites/Game_Over.png");
+        gameOver = loadImage("Images/Non-Interactives/Game_Over.png");
         gameOver.resize(300, 100);
         gameOverX = width/2 - gameOver.width/2;
         gameOverY = height/2 - gameOver.height;
 
-        playButton = loadImage("Sprites/New_Game.png");
+        playButton = loadImage("Images/Non-Interactives/New_Game.png");
         playButton.resize(250, 50);
         playButtonX = width/2 - playButton.width/2;
         playButtonY = height * 3 / 4;
@@ -416,16 +416,16 @@ public class Bootleg_Space_Invaders extends PApplet {
             respawn("enemy3");
         }
         if (health == 4) {
-            healthBar = loadImage("Full_Health.png");
+            healthBar = loadImage("Sprites/Full_Health.png");
             healthBar.resize(100, 25);
         } else if (health == 3) {
-            healthBar = loadImage("3:4_Health.png");
+            healthBar = loadImage("Sprites/3:4_Health.png");
             healthBar.resize(100, 25);
         } else if (health == 2) {
-            healthBar = loadImage("1:2_Health.png");
+            healthBar = loadImage("Sprites/1:2_Health.png");
             healthBar.resize(100, 25);
         } else if (health == 1) {
-            healthBar = loadImage("1:4_Health.png");
+            healthBar = loadImage("Sprites/1:4_Health.png");
             healthBar.resize(100, 25);
         } else if (health == 0) {
             gameBgm.pause();
@@ -465,6 +465,6 @@ public class Bootleg_Space_Invaders extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main("Bootleg_Space_Invaders");
+        PApplet.main("Main");
     }
 }

@@ -40,37 +40,37 @@ public class Main extends PApplet {
         gameOverX = width/2 - gameOver.width/2;
         gameOverY = height/2 - gameOver.height;
 
-        playButton = loadImage("Images/Non-Interactives/New_Game.png");
+        playButton = loadImage("Images/Interactives/New_Game.png");
         playButton.resize(250, 50);
         playButtonX = width/2 - playButton.width/2;
         playButtonY = height * 3 / 4;
 
-        titleCard = loadImage("Sprites/Title_Text.png");
+        titleCard = loadImage("Images/Non-Interactives/Title_Text.png");
         titleCard.resize(300, 120);
         titleCardX = width/2 - titleCard.width/2;
         titleCardY = height/2 - titleCard.height;
 
         health = 4;
-        healthBar = loadImage("Sprites/Full_Health.png");
+        healthBar = loadImage("Images/Interactives/Full_Health.png");
         healthBar.resize(100, 25);
         healthBarX = width - healthBar.width - 5;
         healthBarY = 5;
 
-        player = loadImage("Sprites/Player_Spaceship.png");
+        player = loadImage("Images/Sprites/Player_Spaceship.png");
         playerSize = 50;
         player.resize(playerSize, playerSize);
         playerX = width/2 - playerSize/2;
         playerY = height - playerSize - 20;
         playerSpeed = 5;
 
-        rocket = loadImage("Sprites/Rocket_Sprite.png");
+        rocket = loadImage("Images/Sprites/Rocket_Sprite.png");
         rocket.resize(22, 32);
         rocketX = playerX + player.width / 2 - rocket.width / 2;
         rocketY = playerY - rocket.height;
         rocketSpeed = 0;
         rocketAcc = 1;
 
-        enemy = loadImage("Sprites/Enemy_Ship.png");
+        enemy = loadImage("Images/Sprites/Enemy_Ship.png");
         enemy.resize(64, 64);
 
         enemy1X = (int) (Math.random() * (width - enemy.width));
@@ -85,26 +85,26 @@ public class Main extends PApplet {
         enemy3Y = (int) (Math.random() * -200) - 2000;
         enemy3Speed = (int) (Math.random() * 5) + 5;
 
-        star = loadImage("Sprites/Star_Powerup.png");
+        star = loadImage("Images/Sprites/Star_Powerup.png");
         starMode = false;
         starSpawn = false;
 
-        bigRocket = loadImage("Sprites/Big_Rocket.png");
+        bigRocket = loadImage("Images/Sprites/Big_Rocket.png");
         bigRocketMode = false;
         bigRocketSpawn = false;
 
         powerTime = 20;
 
-        background = loadImage("Sprites/Space_Background.png");
+        background = loadImage("Images/Space_Background.png");
         background.resize(640, 1280);
         backgroundX = 0;
         backgroundY = height - background.height;
 
-        arrowKeys = loadImage("Sprites/Arrow_Image.png");
+        arrowKeys = loadImage("Images/Non-Interactives/Arrow_Image.png");
         arrowKeys.resize(100, 60);
-        wasd = loadImage("Sprites/WASD.png");
+        wasd = loadImage("Images/Non-Interactives/WASD.png");
         wasd.resize(80, 50);
-        mouseImage = loadImage("Sprites/Mouse_Image.png");
+        mouseImage = loadImage("Images/Non-Interactives/Mouse_Image.png");
         mouseImage.resize(90, 100);
 
         loader = new Minim(this);

@@ -249,13 +249,13 @@ public class Main_Advanced extends PApplet {
         if (bigRocketMode) {
             if (rocketFired) {
                 if (rocketY < enemy1Y + enemy.height && rocketX + rocket.width > enemy1X && rocketX < enemy1X + enemy.width) {
-                    respawn("enemy1");
+                    //respawn("enemy1");
                     hitScore = hitScore + 10;
                 } else if (rocketY < enemy2Y + enemy.height && rocketX + rocket.width > enemy2X && rocketX < enemy2X + enemy.width) {
-                    respawn("enemy2");
+                    //respawn("enemy2");
                     hitScore = hitScore + 10;
                 } else if (rocketY < enemy3Y + enemy.height && rocketX + rocket.width > enemy3X && rocketX < enemy3X + enemy.width) {
-                    respawn("enemy3");
+                    //respawn("enemy3");
                     hitScore = hitScore + 10;
                 }
             }
@@ -300,15 +300,15 @@ public class Main_Advanced extends PApplet {
         //If the player IS in starMode, if they touch an enemy ship, the ship respawns and score gets added to.
         if (starMode) {
             if (charContact(enemy1X, enemy1Y, enemy.width, playerX, playerY, player.width)) {
-                respawn("enemy1");
+                //respawn("enemy1");
                 hitScore = hitScore + 10;
             }
             if (charContact(enemy2X, enemy2Y, enemy.width, playerX, playerY, player.width)) {
-                respawn("enemy2");
+                //respawn("enemy2");
                 hitScore = hitScore + 10;
             }
             if (charContact(enemy3X, enemy3Y, enemy.width, playerX, playerY, player.width)) {
-                respawn("enemy3");
+                //respawn("enemy3");
                 hitScore = hitScore + 10;
             }
 
@@ -332,15 +332,15 @@ public class Main_Advanced extends PApplet {
         //If the ship is not destroyed, then the healthcheck will hurt the player.
         if (charContact(enemy1X, enemy1Y, enemy.width, playerX, playerY, player.width)) {
             health--;
-            respawn("enemy1");
+            //respawn("enemy1");
         }
         if (charContact(enemy2X, enemy2Y, enemy.width, playerX, playerY, player.width)) {
             health--;
-            respawn("enemy2");
+            //respawn("enemy2");
         }
         if (charContact(enemy3X, enemy3Y, enemy.width, playerX, playerY, player.width)) {
             health--;
-            respawn("enemy3");
+            //respawn("enemy3");
         }
         if (health == 4) {
             healthBar = loadImage("Sprites/Full_Health.png");

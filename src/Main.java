@@ -314,7 +314,7 @@ public class Main extends PApplet {
             //If powerTime goes past 0, returns everything back to normal.
             if (powerTime < 0) {
                 bigRocketMode = false;
-                rocket = loadImage("Rocket_Sprite.png");
+                rocket = loadImage("Images/Sprites/Rocket_Sprite.png");
                 rocket.resize(22, 32);
                 powerTime = 20;
                 rocketAcc = 1;
@@ -365,7 +365,7 @@ public class Main extends PApplet {
         if (charContact(playerX, playerY, playerSize, starX, starY, star.width) && starSpawn) {
             starMode = true;
             starSpawn = false;
-            player = loadImage("Rainbow_Player.png");
+            player = loadImage("Images/Sprites/Rainbow_Player.png");
             player.resize(50, 50);
             playerSpeed = 10;
         }
@@ -391,7 +391,7 @@ public class Main extends PApplet {
             powerTime = powerTime - 1.0/60;
             if (powerTime < 0) {
                 starMode = false;
-                player = loadImage("Player_Spaceship.png");
+                player = loadImage("Images/Sprites/Player_Spaceship.png");
                 player.resize(50, 50);
                 playerSpeed = 5;
                 powerTime = 20;
@@ -416,16 +416,16 @@ public class Main extends PApplet {
             respawn("enemy3");
         }
         if (health == 4) {
-            healthBar = loadImage("Sprites/Full_Health.png");
+            healthBar = loadImage("Images/Interactives/Full_Health.png");
             healthBar.resize(100, 25);
         } else if (health == 3) {
-            healthBar = loadImage("Sprites/3:4_Health.png");
+            healthBar = loadImage("Images/Interactives/3:4_Health.png");
             healthBar.resize(100, 25);
         } else if (health == 2) {
-            healthBar = loadImage("Sprites/1:2_Health.png");
+            healthBar = loadImage("Images/Interactives/1:2_Health.png");
             healthBar.resize(100, 25);
         } else if (health == 1) {
-            healthBar = loadImage("Sprites/1:4_Health.png");
+            healthBar = loadImage("Images/Interactives/1:4_Health.png");
             healthBar.resize(100, 25);
         } else if (health == 0) {
             gameBgm.pause();

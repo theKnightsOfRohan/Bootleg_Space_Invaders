@@ -12,10 +12,10 @@ public class Enemy extends Main_Advanced {
         this.speed = (int)(Math.random() * 5) + 5;
     }
 
-    public void act() {
+    public void act(Rocket rocket, Player player) {
         this.move();
-        this.rocketContact();
-        this.hitChar();
+        this.rocketContact(rocket);
+        this.hitChar(player);
     }
 
     public void move() {
@@ -31,17 +31,17 @@ public class Enemy extends Main_Advanced {
         this.speed = (int) (Math.random() * 5) + 5;
     }
 
-    public void rocketContact() {
-        if (this.x < rocketX && this.x + this.sprite.width > rocketX && this.y + this.sprite.height < rocketY) {
+    public void rocketContact(Rocket rocket) {
+        if (this.x < rocket.x && this.x + this.sprite.width > rocket.x && this.y + this.sprite.height < rocket.y) {
             this.respawn();
-            rocketFired = false;
+            rocket.fired = false;
             hitScore = hitScore + 10;
         }
     }
 
-    public void hitChar() {
-        if (charContact(this.x, this.y, this.sprite.width, playerX, playerY, playerSize)) {
-            health--;
+    public void hitChar(Player player) {
+        if (charContact(this.x, this.y, this.sprite.width, player.x, player.y, player.sprite.width)) {
+            player.health--;
             this.respawn();
         }
     }

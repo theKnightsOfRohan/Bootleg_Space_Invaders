@@ -13,10 +13,14 @@ public class Player extends Main_Advanced {
         this.y = height - this.sprite.height - 20;
         this.speed = 5;
         this.health = 4;
+        this.healthBar.add(loadImage("Images/Interactives/1:4_Health.png"));
+        this.healthBar.add(loadImage("Images/Interactives/1:2_Health.png"));
+        this.healthBar.add(loadImage("Images/Interactives/3:4_Health.png"));
+        this.healthBar.add(loadImage("Images/Interactives/Full_Health.png"));
     }
 
     public void act() {
-        movement();
+        this.movement();
     }
 
     public void movement() {

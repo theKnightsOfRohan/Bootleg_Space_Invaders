@@ -1,6 +1,8 @@
+package v2;
 import processing.core.PApplet;
 import processing.core.PImage;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 
@@ -10,19 +12,20 @@ public class Main extends PApplet {
     AudioPlayer gameBgm, homeBgm, gameOverSound;
     DecimalFormat df = new DecimalFormat("#.0");
     PImage player, enemy, rocket, background, star, bigRocket, playButton, healthBar, gameOver, titleCard, wasd, arrowKeys, mouseImage;
+    ArrayList<Image> startScreenImages = new ArrayList<>();
 
     int playerX, playerY, playerSpeed, playerSize,
-        rocketX, rocketY, rocketSpeed, rocketAcc,
-        enemy1X, enemy1Y, enemy1Speed,
-        enemy2X, enemy2Y, enemy2Speed,
-        enemy3X, enemy3Y, enemy3Speed,
-        starX, starY,
-        bigRocketX, bigRocketY,
-        health, healthBarX, healthBarY,
-        playButtonX, playButtonY,
-        gameOverX, gameOverY,
-        titleCardX, titleCardY,
-        backgroundX, backgroundY;
+            rocketX, rocketY, rocketSpeed, rocketAcc,
+            enemy1X, enemy1Y, enemy1Speed,
+            enemy2X, enemy2Y, enemy2Speed,
+            enemy3X, enemy3Y, enemy3Speed,
+            starX, starY,
+            bigRocketX, bigRocketY,
+            health, healthBarX, healthBarY,
+            playButtonX, playButtonY,
+            gameOverX, gameOverY,
+            titleCardX, titleCardY,
+            backgroundX, backgroundY;
     double score, time, hitScore, powerTime;
     boolean rocketFired, starSpawn, starMode, bigRocketSpawn, bigRocketMode, play, gameOverScreen;
 
@@ -40,37 +43,37 @@ public class Main extends PApplet {
         gameOverX = width/2 - gameOver.width/2;
         gameOverY = height/2 - gameOver.height;
 
-        playButton = loadImage("Images/Interactives/New_Game.png");
+        playButton = loadImage("Images/Non-Interactives/New_Game.png");
         playButton.resize(250, 50);
         playButtonX = width/2 - playButton.width/2;
         playButtonY = height * 3 / 4;
 
-        titleCard = loadImage("Images/Non-Interactives/Title_Text.png");
+        titleCard = loadImage("Sprites/Title_Text.png");
         titleCard.resize(300, 120);
         titleCardX = width/2 - titleCard.width/2;
         titleCardY = height/2 - titleCard.height;
 
         health = 4;
-        healthBar = loadImage("Images/Interactives/Full_Health.png");
+        healthBar = loadImage("Sprites/Full_Health.png");
         healthBar.resize(100, 25);
         healthBarX = width - healthBar.width - 5;
         healthBarY = 5;
 
-        player = loadImage("Images/Sprites/Player_Spaceship.png");
+        player = loadImage("Sprites/Player_Spaceship.png");
         playerSize = 50;
         player.resize(playerSize, playerSize);
         playerX = width/2 - playerSize/2;
         playerY = height - playerSize - 20;
         playerSpeed = 5;
 
-        rocket = loadImage("Images/Sprites/Rocket_Sprite.png");
+        rocket = loadImage("Sprites/Rocket_Sprite.png");
         rocket.resize(22, 32);
         rocketX = playerX + player.width / 2 - rocket.width / 2;
         rocketY = playerY - rocket.height;
         rocketSpeed = 0;
         rocketAcc = 1;
 
-        enemy = loadImage("Images/Sprites/Enemy_Ship.png");
+        enemy = loadImage("Sprites/Enemy_Ship.png");
         enemy.resize(64, 64);
 
         enemy1X = (int) (Math.random() * (width - enemy.width));
@@ -85,27 +88,32 @@ public class Main extends PApplet {
         enemy3Y = (int) (Math.random() * -200) - 2000;
         enemy3Speed = (int) (Math.random() * 5) + 5;
 
-        star = loadImage("Images/Sprites/Star_Powerup.png");
+        star = loadImage("Sprites/Star_Powerup.png");
         starMode = false;
         starSpawn = false;
 
-        bigRocket = loadImage("Images/Sprites/Big_Rocket.png");
+        bigRocket = loadImage("Sprites/Big_Rocket.png");
         bigRocketMode = false;
         bigRocketSpawn = false;
 
         powerTime = 20;
 
-        background = loadImage("Images/Space_Background.png");
+        background = loadImage("Sprites/Space_Background.png");
         background.resize(640, 1280);
         backgroundX = 0;
         backgroundY = height - background.height;
 
-        arrowKeys = loadImage("Images/Non-Interactives/Arrow_Image.png");
+        arrowKeys = loadImage("Sprites/Arrow_Image.png");
         arrowKeys.resize(100, 60);
-        wasd = loadImage("Images/Non-Interactives/WASD.png");
+        wasd = loadImage("Sprites/WASD.png");
         wasd.resize(80, 50);
-        mouseImage = loadImage("Images/Non-Interactives/Mouse_Image.png");
+        mouseImage = loadImage("Sprites/Mouse_Image.png");
         mouseImage.resize(90, 100);
+
+        Image titleCard = new Image(170, 200, 300, 120, "Images/Non-Interactives/Title_Text.png");
+        Image arrowKeys = new Image(10, 10, 100, 60, "Images/Non-Interactives/Arrow-Image.png");
+        Image wasd = new Image(20, 70, 80, 50, "Images/Non-Interactives/Title-Text.png");
+        Image mouse = new Image(450, 10, 90, 100, "Images/Non-Interactives/Mouse_Image.png");
 
         loader = new Minim(this);
         gameBgm = loader.loadFile("Music/Space_Theme.mp3");
@@ -122,23 +130,19 @@ public class Main extends PApplet {
         if(!play && !gameOverScreen) {
             //The start screen.
             background();
-            image(titleCard, titleCardX, titleCardY);
+            for (Image currImage : startScreenImages) {
+                image(currImage.sprite, currImage.x, currImage.y);
+            }
             image(playButton, playButtonX, playButtonY);
             image(player, playerX, playerY);
-            image(arrowKeys, 10, 10);
-            image(wasd, 20, 70);
-            image(mouseImage, 450, 10);
             textSize(20);
             text("TO MOVE", 120, 75);
             text("TO FIRE", 530, 80);
         } else if (play && !gameOverScreen){
             //The normal gameplay functions.
             background();
-            playerMovement();
             rocketActions();
-            enemyMovement();
             bigRocketCollect();
-            rocketContact();
             starCollect();
             healthCheck();
 
@@ -166,58 +170,6 @@ public class Main extends PApplet {
         }
     }
 
-    public void playerMovement() {
-        //Basic movement. Uses both WASD and ^v<>
-        if (keyPressed) {
-            if (keyCode == RIGHT || key == 'd') {
-                playerX = playerX + playerSpeed;
-            }
-            if (keyCode == LEFT || key == 'a') {
-                playerX = playerX - playerSpeed;
-            }
-            if (keyCode == UP || key == 'w') {
-                playerY = playerY - playerSpeed;
-            }
-            if (keyCode == DOWN || key == 's') {
-                playerY = playerY + playerSpeed;
-            }
-        }
-
-        //Sets movement boundaries to window edges.
-        //Left edge
-        if (playerX < 0) {
-            playerX = 0;
-        }
-        //Right edge
-        if (playerX + player.width > width) {
-            playerX = width - player.width;
-        }
-        //Top edge
-        if (playerY < 0) {
-            playerY = 0;
-        }
-        //Bottom edge
-        if (playerY + player.height > height) {
-            playerY = height - player.height;
-        }
-    }
-    public void enemyMovement() {
-        //Enemy movement only goes down so only Y movement.
-        enemy1Y = enemy1Y + enemy1Speed;
-        enemy2Y = enemy2Y + enemy2Speed;
-        enemy3Y = enemy3Y + enemy3Speed;
-
-        //Enemies respawn at top + re-randomize if top edge contacts bottom.
-        if (enemy1Y > height) {
-            respawn("enemy1");
-        }
-        if (enemy2Y > height) {
-            respawn("enemy2");
-        }
-        if (enemy3Y > height) {
-            respawn("enemy3");
-        }
-    }
     public boolean charContact(int char1X, int char1Y, int char1Diam, int char2X, int char2Y, int char2Diam) {
         //Finds center of both shapes for distance formula.
         int char1CenterX = char1X + char1Diam / 2;
@@ -298,13 +250,13 @@ public class Main extends PApplet {
         if (bigRocketMode) {
             if (rocketFired) {
                 if (rocketY < enemy1Y + enemy.height && rocketX + rocket.width > enemy1X && rocketX < enemy1X + enemy.width) {
-                    respawn("enemy1");
+                    //respawn("enemy1");
                     hitScore = hitScore + 10;
                 } else if (rocketY < enemy2Y + enemy.height && rocketX + rocket.width > enemy2X && rocketX < enemy2X + enemy.width) {
-                    respawn("enemy2");
+                    //respawn("enemy2");
                     hitScore = hitScore + 10;
                 } else if (rocketY < enemy3Y + enemy.height && rocketX + rocket.width > enemy3X && rocketX < enemy3X + enemy.width) {
-                    respawn("enemy3");
+                    //respawn("enemy3");
                     hitScore = hitScore + 10;
                 }
             }
@@ -314,7 +266,7 @@ public class Main extends PApplet {
             //If powerTime goes past 0, returns everything back to normal.
             if (powerTime < 0) {
                 bigRocketMode = false;
-                rocket = loadImage("Images/Sprites/Rocket_Sprite.png");
+                rocket = loadImage("Rocket_Sprite.png");
                 rocket.resize(22, 32);
                 powerTime = 20;
                 rocketAcc = 1;
@@ -322,31 +274,7 @@ public class Main extends PApplet {
             }
         }
     }
-    public void rocketContact() {
-        //Only does contact check if rocket is fired.
-        //Otherwise, because rocket follows ship in front, ship has melee attacks.
-        if (rocketFired) {
-            //Checks if top edge of rocket contacts bottom edge of enemies.
-            //Simpler check because only vertical movement.
-            //Also checks if contacting within enemy's l/r boundaries.
-            //If contacts, re-randomizes enemy with location closer to edge than initial spawn(doubles as despawning enemy),
-            //makes rocketFired false so that rocket despawns and player can fire again,
-            //and adds 10 to hitScore.
-            if (rocketY < enemy1Y + enemy.height && rocketX + rocket.width > enemy1X && rocketX < enemy1X + enemy.width) {
-                respawn("enemy1");
-                rocketFired = false;
-                hitScore = hitScore + 10;
-            } else if (rocketY < enemy2Y + enemy.height && rocketX + rocket.width > enemy2X && rocketX < enemy2X + enemy.width) {
-                respawn("enemy2");
-                rocketFired = false;
-                hitScore = hitScore + 10;
-            } else if (rocketY < enemy3Y + enemy.height && rocketX + rocket.width > enemy3X && rocketX < enemy3X + enemy.width) {
-                respawn("enemy3");
-                rocketFired = false;
-                hitScore = hitScore + 10;
-            }
-        }
-    }
+
     public void starCollect() {
         //If the star is not spawned, the time is greater than 1 minute, and the time is a multiple of 1 minute, spawn the star.
         if (!starSpawn && time > 60 && time % 60 < 1 && powerTime == 20) {
@@ -365,7 +293,7 @@ public class Main extends PApplet {
         if (charContact(playerX, playerY, playerSize, starX, starY, star.width) && starSpawn) {
             starMode = true;
             starSpawn = false;
-            player = loadImage("Images/Sprites/Rainbow_Player.png");
+            player = loadImage("Rainbow_Player.png");
             player.resize(50, 50);
             playerSpeed = 10;
         }
@@ -373,15 +301,15 @@ public class Main extends PApplet {
         //If the player IS in starMode, if they touch an enemy ship, the ship respawns and score gets added to.
         if (starMode) {
             if (charContact(enemy1X, enemy1Y, enemy.width, playerX, playerY, player.width)) {
-                respawn("enemy1");
+                //respawn("enemy1");
                 hitScore = hitScore + 10;
             }
             if (charContact(enemy2X, enemy2Y, enemy.width, playerX, playerY, player.width)) {
-                respawn("enemy2");
+                //respawn("enemy2");
                 hitScore = hitScore + 10;
             }
             if (charContact(enemy3X, enemy3Y, enemy.width, playerX, playerY, player.width)) {
-                respawn("enemy3");
+                //respawn("enemy3");
                 hitScore = hitScore + 10;
             }
 
@@ -391,7 +319,7 @@ public class Main extends PApplet {
             powerTime = powerTime - 1.0/60;
             if (powerTime < 0) {
                 starMode = false;
-                player = loadImage("Images/Sprites/Player_Spaceship.png");
+                player = loadImage("Player_Spaceship.png");
                 player.resize(50, 50);
                 playerSpeed = 5;
                 powerTime = 20;
@@ -405,27 +333,27 @@ public class Main extends PApplet {
         //If the ship is not destroyed, then the healthcheck will hurt the player.
         if (charContact(enemy1X, enemy1Y, enemy.width, playerX, playerY, player.width)) {
             health--;
-            respawn("enemy1");
+            //respawn("enemy1");
         }
         if (charContact(enemy2X, enemy2Y, enemy.width, playerX, playerY, player.width)) {
             health--;
-            respawn("enemy2");
+            //respawn("enemy2");
         }
         if (charContact(enemy3X, enemy3Y, enemy.width, playerX, playerY, player.width)) {
             health--;
-            respawn("enemy3");
+            //respawn("enemy3");
         }
         if (health == 4) {
-            healthBar = loadImage("Images/Interactives/Full_Health.png");
+            healthBar = loadImage("Sprites/Full_Health.png");
             healthBar.resize(100, 25);
         } else if (health == 3) {
-            healthBar = loadImage("Images/Interactives/3:4_Health.png");
+            healthBar = loadImage("Sprites/3:4_Health.png");
             healthBar.resize(100, 25);
         } else if (health == 2) {
-            healthBar = loadImage("Images/Interactives/1:2_Health.png");
+            healthBar = loadImage("Sprites/1:2_Health.png");
             healthBar.resize(100, 25);
         } else if (health == 1) {
-            healthBar = loadImage("Images/Interactives/1:4_Health.png");
+            healthBar = loadImage("Sprites/1:4_Health.png");
             healthBar.resize(100, 25);
         } else if (health == 0) {
             gameBgm.pause();
@@ -446,25 +374,7 @@ public class Main extends PApplet {
         image(background, backgroundX, backgroundY);
     }
 
-    //Does the three respawn actions for the same enemy that the input string is.
-    //This would have been MUCH EASIER with character classes >:(
-    public void respawn(String enemyName) {
-        if (enemyName.equals("enemy1")) {
-            enemy1X = (int) (Math.random() * (width - enemy.width));
-            enemy1Y = (int) (Math.random() * -100) - enemy.height;
-            enemy1Speed = (int) (Math.random() * 5) + 5;
-        } else if (enemyName.equals("enemy2")) {
-            enemy2X = (int) (Math.random() * (width - enemy.width));
-            enemy2Y = (int) (Math.random() * -100) - enemy.height;
-            enemy2Speed = (int) (Math.random() * 5) + 5;
-        } else if (enemyName.equals("enemy3")) {
-            enemy3X = (int) (Math.random() * (width - enemy.width));
-            enemy3Y = (int) (Math.random() * -100) - enemy.height;
-            enemy3Speed = (int) (Math.random() * 5) + 5;
-        }
-    }
-
     public static void main(String[] args) {
-        PApplet.main("Main");
+        PApplet.main("Main_Advanced");
     }
 }

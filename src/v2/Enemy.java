@@ -1,6 +1,7 @@
+package v2;
 import processing.core.PImage;
 
-public class Enemy extends Main_Advanced {
+public class Enemy extends Main {
     PImage sprite;
 
     int x, y, speed;

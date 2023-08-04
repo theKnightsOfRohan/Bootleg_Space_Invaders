@@ -1,6 +1,7 @@
+package v2;
 import processing.core.PImage;
 
-public class Rocket extends Main_Advanced {
+public class Rocket extends Main {
     PImage sprite, bigRocketSprite;
     int x, y, speed, acc;
     boolean bigRocketMode, fired;

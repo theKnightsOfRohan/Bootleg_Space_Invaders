@@ -1,7 +1,8 @@
+package v2;
 import processing.core.PImage;
 import java.util.ArrayList;
 
-public class Player extends Main_Advanced {
+public class Player extends Main {
     PImage sprite;
     int x, y, speed, size, health;
     ArrayList<PImage> healthBar = new ArrayList<>();

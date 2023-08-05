@@ -1,6 +1,7 @@
 package v2;
 import processing.core.PApplet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import processing.core.PImage;
 import java.text.DecimalFormat;
 import ddf.minim.AudioPlayer;
@@ -19,10 +20,10 @@ public class Main extends PApplet {
 
     public void settings() {
         size(640, 640);
+        frameRate = 60;
     }
 
     public void setup() {
-        //frameRate(60);
         player = new Player(this);
         background = new Image(0, 0, 640, 1280, loadImage("Images/Space_Background.png"));
         healthBar = new HealthBar(new PImage[] {
@@ -31,11 +32,12 @@ public class Main extends PApplet {
             loadImage("Images/Interactives/1:2_Health.png"),
             loadImage("Images/Interactives/1:4_Health.png")
         });
-        rocketImg = loadImage("Images/Sprites/Rocket.png");
-        enemyImg = loadImage("Images/Sprites/Enemy_Spaceship.png");
+        rocketImg = loadImage("Images/Sprites/Rocket_Sprite.png");
+
+        enemyImg = loadImage("Images/Sprites/Enemy_Ship.png");
         images.add(background);
-        images.add(player);
         images.add(healthBar);
+        images.add(player);
     }
 
     public void draw() {

@@ -11,9 +11,13 @@ public class Rocket extends Image {
         this.acc = -1;
     }
 
-    public void draw(Main main) {
+    public void draw(Main main, int index) {
         this.move();
         main.image(this.img, this.x, this.y);
+        if (this.y < -32) {
+            main.rockets.remove(this);
+            index--;
+        }
     }
 
     private void move() {

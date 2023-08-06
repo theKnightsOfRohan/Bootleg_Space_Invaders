@@ -6,7 +6,7 @@ public class Player extends Image {
 
     public Player(Main main) {
         super(main.width/2 - 25, main.height - 70, 50, 50, main.loadImage("Images/Sprites/Player_Spaceship.png"));
-        this.speed = 1;
+        this.speed = 5;
     }
 
     public void move(int keyCode) {

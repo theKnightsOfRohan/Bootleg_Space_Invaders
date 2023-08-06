@@ -5,6 +5,7 @@ import processing.core.PImage;
 public class Enemy extends Image {
     int speed;
 
+    
     public Enemy(PImage img) {
         super((int)(Math.random() * 576), (int)(Math.random() * -100) - 64, 64, 64, img);
         this.speed = (int) (Math.random() * 5) + 5;

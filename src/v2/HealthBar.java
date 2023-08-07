@@ -7,7 +7,7 @@ public class HealthBar extends Image {
     int hitCounter = 0;
 
     public HealthBar(PImage[] imgs) {
-        super(0, 0, 100, 25, imgs[0]);
+        super(535, 5, 100, 25, imgs[0]);
         this.imgs = imgs;
         for (PImage img : imgs) {
             img.resize(100, 25);

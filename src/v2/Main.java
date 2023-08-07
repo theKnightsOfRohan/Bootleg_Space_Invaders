@@ -1,24 +1,26 @@
 package v2;
 import processing.core.PApplet;
 import java.util.ArrayList;
-import java.util.Arrays;
 import processing.core.PImage;
 import java.text.DecimalFormat;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 
 public class Main extends PApplet {
+    Minim loader;
+    AudioPlayer gameBgm, homeBgm, gameOverSound;
+    DecimalFormat df = new DecimalFormat("#.0");
     ArrayList<Enemy> enemies = new ArrayList<>();
     ArrayList<Rocket> rockets = new ArrayList<>();
-    ArrayList<Image> screen1 = new ArrayList<>();
-    ArrayList<Image> screen2 = new ArrayList<>();
-    ArrayList<Image> screen3 = new ArrayList<>();
+    ArrayList<Image> startScreen = new ArrayList<>();
+    ArrayList<Image> playScreen = new ArrayList<>();
+    ArrayList<Image> deathScreen = new ArrayList<>();
     Player player;
     Image background, newGame;
     HealthBar healthBar;
-    PImage rocketImg;
-    PImage enemyImg;
+    PImage rocketImg, enemyImg;
     int gameState;
+    double score, time, hitScore, powerTime;
 
 
     public void settings() {
@@ -40,28 +42,47 @@ public class Main extends PApplet {
         rocketImg = loadImage("Images/Sprites/Rocket_Sprite.png");
         enemyImg = loadImage("Images/Sprites/Enemy_Ship.png");
         
-        screen1.add(background);
-        screen1.add(new Image(width/2 - 150, height/2 - 120, 300, 120, loadImage("Images/Non-Interactives/Title_Text.png")));
-        screen1.add(newGame);
-        screen1.add(player);
-        screen2.add(background);
-        screen2.add(healthBar);
-        screen2.add(player);
-        screen3.add(newGame);
+        startScreen.add(background);
+        startScreen.add(new Image(width/2 - 150, height/2 - 120, 300, 120, loadImage("Images/Non-Interactives/Title_Text.png")));
+        startScreen.add(new Image(10, 10, 100, 60, loadImage("Images/Non-Interactives/Arrow_Image.png")));
+        startScreen.add(new Image(20, 70, 80, 50, loadImage("Images/Non-Interactives/WASD.png")));
+        startScreen.add(new Image(450, 10, 90, 100, loadImage("Images/Non-Interactives/Mouse_Image.png")));
+        startScreen.add(newGame);
+        startScreen.add(player);
+        playScreen.add(background);
+        playScreen.add(healthBar);
+        playScreen.add(player);
+        deathScreen.add(newGame);
+        deathScreen.add(new Image(width/2 - 150, height/2 - 50, 300, 100, loadImage("Images/Non-Interactives/Game_Over.png")));
+
+        score = 0.00;
+        time = 0.00;
+        hitScore = 0.0;
+        textSize(20);
+        fill(255);
     }
 
     public void draw() {
         if (gameState == 0) {
-            screen1.forEach(img -> img.draw(this));
+            startScreen.forEach(img -> img.draw(this));
+            text("TO MOVE", 120, 75);
+            text("TO FIRE", 530, 80);
             bgAction();
         } else if (gameState == 1) {
-            screen2.forEach(img -> img.draw(this));
+            playScreen.forEach(img -> img.draw(this));
             for (int i = 0; i < rockets.size(); i++) {
                 rockets.get(i).draw(this, i);
             }
             bgAction();
+            time = time + 1.0 / 60;
+            score = hitScore - time;
+            if (score < 0) {
+                score = 0;
+            }
+            text("Score: " + Double.valueOf(df.format(score)), 10, 20);
         } else if (gameState == 2) {
-            screen3.forEach(img -> img.draw(this));
+            background(0);
+            deathScreen.forEach(img -> img.draw(this));
         }
     }
 
@@ -92,16 +113,13 @@ public class Main extends PApplet {
 
     public void keyReleased() {
         if (key == ' ') {
-            rockets.add(new Rocket(player.x + 14, player.y - 32, rocketImg));
+            gameState = 1;
         }
     }
 
     public void keyPressed() {
         switch (gameState) {
             case 0:
-                if (key == ' ') {
-                    gameState = 1;
-                }
                 break;
             case 1:
                 player.move(keyCode);

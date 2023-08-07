@@ -73,7 +73,12 @@ public class Main extends PApplet {
             for (int i = 0; i < rockets.size(); i++) {
                 rockets.get(i).draw(this, i);
             }
+            for (int i = 0; i < enemies.size(); i++) {
+                enemies.get(i).draw(this);
+            }
             bgAction();
+            spawnEnemies();
+            keyPressed();
             time = time + 1.0 / 60;
             score = hitScore - time;
             if (score < 0) {
@@ -91,6 +96,12 @@ public class Main extends PApplet {
             background.y = -640;
         }
         background.y += 1;
+    }
+
+    public void spawnEnemies() {
+        if (frameCount % 60 == 0) {
+            enemies.add(new Enemy(enemyImg));
+        }
     }
 
     public void mouseReleased() {
@@ -112,8 +123,16 @@ public class Main extends PApplet {
     }
 
     public void keyReleased() {
-        if (key == ' ') {
-            gameState = 1;
+        switch (gameState) {
+            case 0:
+                if (key == ' ') gameState = 1;
+                break;
+            case 1:
+                keyCode = 0;
+                break;
+            case 2:
+                if (key == ' ') gameState = 1;
+                break;
         }
     }
 

@@ -1,5 +1,7 @@
 package v2;
 
+import java.util.ArrayList;
+
 import processing.core.PImage;
 
 public class Enemy extends Image {
@@ -13,6 +15,8 @@ public class Enemy extends Image {
 
     public void draw(Main main) {
         this.move();
+        this.hitsPlayer(main);
+        this.hitsRocket(main);
         main.image(this.img, this.x, this.y);
     }
 
@@ -20,6 +24,30 @@ public class Enemy extends Image {
         this.y += this.speed;
         if (this.y > 804) {
             this.respawn();
+        }
+    }
+
+    public void hitsPlayer(Main main) {
+        if (this.isTouching(main.player)) {
+            main.healthBar.hitCounter++;
+            main.enemies.remove(this);
+            if (main.healthBar.hitCounter == 4) {
+                main.player.reset(main);
+                main.gameState = 2;
+                main.healthBar.hitCounter = 0;
+                main.enemies.clear();
+                main.keyCode = 0;
+            }
+        }
+    }
+
+    public void hitsRocket(Main main) {
+        for (int i = 0; i < main.rockets.size(); i++) {
+            if (this.isTouching(main.rockets.get(i))) {
+                main.rockets.remove(i);
+                main.score += 10;
+                main.enemies.remove(this);
+            }
         }
     }
 

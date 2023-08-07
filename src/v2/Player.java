@@ -24,5 +24,21 @@ public class Player extends Image {
                 this.y += this.speed;
                 break;
         }
+
+        if (this.x < 0) {
+            this.x = 0;
+        } else if (this.x > 576 - this.w) {
+            this.x = 576 - this.w;
+        }
+        if (this.y < 0) {
+            this.y = 0;
+        } else if (this.y > 804 - this.h) {
+            this.y = 804 - this.h;
+        }
+    }
+
+    public void reset(Main main) {
+        this.x = main.width/2 - 25;
+        this.y = main.height - 70;
     }
 }

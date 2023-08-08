@@ -27,13 +27,13 @@ public class Player extends Image {
 
         if (this.x < 0) {
             this.x = 0;
-        } else if (this.x > 576 - this.w) {
-            this.x = 576 - this.w;
+        } else if (this.x > 590) {
+            this.x = 590;
         }
         if (this.y < 0) {
             this.y = 0;
-        } else if (this.y > 804 - this.h) {
-            this.y = 804 - this.h;
+        } else if (this.y > 590) {
+            this.y = 590;
         }
     }
 

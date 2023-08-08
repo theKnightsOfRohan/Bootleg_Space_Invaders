@@ -1,4 +1,5 @@
 package v2;
+
 import processing.core.PApplet;
 import java.util.ArrayList;
 import processing.core.PImage;
@@ -7,7 +8,7 @@ import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 
 public class Main extends PApplet {
-    Minim loader;
+    Minim loader = new Minim(this);
     AudioPlayer gameBgm, homeBgm, gameOverSound;
     DecimalFormat df = new DecimalFormat("#.0");
     ArrayList<Enemy> enemies = new ArrayList<>();
@@ -60,6 +61,11 @@ public class Main extends PApplet {
         hitScore = 0.0;
         textSize(20);
         fill(255);
+
+        gameBgm = loader.loadFile("Music/Space_Theme.mp3");
+        homeBgm = loader.loadFile("Music/Home_Music.mp3");
+        gameOverSound = loader.loadFile("Music/Game_Over_Sound.mp3");
+        homeBgm.play();
     }
 
     public void draw() {
@@ -99,7 +105,7 @@ public class Main extends PApplet {
     }
 
     public void spawnEnemies() {
-        if (frameCount % 60 == 0) {
+        if (frameCount % 500 == 0) {
             enemies.add(new Enemy(enemyImg));
         }
     }
@@ -108,7 +114,7 @@ public class Main extends PApplet {
         switch (gameState) {
             case 0:
                 if (mouseX >= newGame.x && mouseX <= newGame.x + newGame.w && mouseY >= newGame.y && mouseY <= newGame.y + newGame.h) {
-                    gameState = 1;
+                    switchToPlay();
                 }
                 break;
             case 1:
@@ -116,7 +122,7 @@ public class Main extends PApplet {
                 break;
             case 2:
                 if (mouseX >= newGame.x && mouseX <= newGame.x + newGame.w && mouseY >= newGame.y && mouseY <= newGame.y + newGame.h) {
-                    gameState = 1;
+                    switchToPlay();
                 }
                 break;
         }
@@ -125,13 +131,13 @@ public class Main extends PApplet {
     public void keyReleased() {
         switch (gameState) {
             case 0:
-                if (key == ' ') gameState = 1;
+                if (key == ' ') switchToPlay();
                 break;
             case 1:
                 keyCode = 0;
                 break;
             case 2:
-                if (key == ' ') gameState = 1;
+                if (key == ' ') switchToPlay();
                 break;
         }
     }
@@ -144,11 +150,15 @@ public class Main extends PApplet {
                 player.move(keyCode);
                 break;
             case 2:
-                if (key == ' ') {
-                    gameState = 1;
-                }
                 break;
         }
+    }
+
+    public void switchToPlay() {
+        gameState = 1;
+        homeBgm.pause();
+        homeBgm.rewind();
+        gameBgm.play();
     }
 
     public static void main(String[] args) {

@@ -1,7 +1,5 @@
 package v2;
 
-import java.util.ArrayList;
-
 import processing.core.PImage;
 
 public class Enemy extends Image {
@@ -37,6 +35,11 @@ public class Enemy extends Image {
                 main.healthBar.hitCounter = 0;
                 main.enemies.clear();
                 main.keyCode = 0;
+                main.gameBgm.pause();
+                main.gameBgm.rewind();
+                main.gameOverSound.play();
+                main.gameOverSound.rewind();
+                main.homeBgm.play();
             }
         }
     }
@@ -45,8 +48,8 @@ public class Enemy extends Image {
         for (int i = 0; i < main.rockets.size(); i++) {
             if (this.isTouching(main.rockets.get(i))) {
                 main.rockets.remove(i);
-                main.score += 10;
-                main.enemies.remove(this);
+                main.hitScore += 10;
+                this.respawn();
             }
         }
     }

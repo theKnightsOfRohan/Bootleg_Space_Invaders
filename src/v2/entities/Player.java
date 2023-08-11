@@ -1,12 +1,14 @@
-package v2;
-import processing.core.PImage;
+package v2.entities;
+
+import v2.Image;
+import v2.Main;
 
 public class Player extends Image {
     int speed, health;
 
     public Player(Main main) {
-        super(main.width/2 - 25, main.height - 70, 50, 50, main.loadImage("Images/Sprites/Player_Spaceship.png"));
-        this.speed = 5;
+        super(main.width/2 - 25, main.height - 70, PlayerSettings.WIDTH, PlayerSettings.HEIGHT, main.loadImage("Images/Sprites/Player_Spaceship.png"));
+        this.speed = PlayerSettings.INITIAL_SPEED;
     }
 
     public void move(int keyCode) {

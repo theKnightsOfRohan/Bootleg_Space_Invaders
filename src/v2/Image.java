@@ -3,8 +3,8 @@ package v2;
 import processing.core.PImage;
 
 public class Image {
-    int x, y, w, h;
-    PImage img;
+    public int x, y, w, h;
+    public PImage img;
     
     public Image(int x, int y, int w, int h, PImage img) {
         this.x = x;
@@ -17,5 +17,9 @@ public class Image {
 
     public void draw(Main main) {
         main.image(img, x, y);
+    }
+
+    public boolean isTouching(Image img) {
+        return (this.x < img.x + img.w && this.x + this.w > img.x && this.y < img.y + img.h && this.y + this.h > img.y);
     }
 }

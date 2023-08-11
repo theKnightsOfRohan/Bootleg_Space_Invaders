@@ -1,12 +1,14 @@
-package v2;
+package v2.entities;
 
 import processing.core.PImage;
+import v2.Image;
+import v2.Main;
 
 public class Rocket extends Image {
     int speed, acc;
 
     public Rocket(int x, int y, PImage img) {
-        super(x, y, 22, 32, img);
+        super(x, y, RocketSettings.WIDTH, RocketSettings.HEIGHT, img);
         this.speed = 0;
         this.acc = -1;
     }

@@ -1,5 +1,9 @@
 package v2;
 
+import v2.MainSettings;
+import v2.entities.Enemy;
+import v2.entities.Player;
+import v2.entities.Rocket;
 import processing.core.PApplet;
 import java.util.ArrayList;
 import processing.core.PImage;
@@ -8,29 +12,29 @@ import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 
 public class Main extends PApplet {
-    Minim loader = new Minim(this);
-    AudioPlayer gameBgm, homeBgm, gameOverSound;
-    DecimalFormat df = new DecimalFormat("#.0");
-    ArrayList<Enemy> enemies = new ArrayList<>();
-    ArrayList<Rocket> rockets = new ArrayList<>();
-    ArrayList<Image> startScreen = new ArrayList<>();
-    ArrayList<Image> playScreen = new ArrayList<>();
-    ArrayList<Image> deathScreen = new ArrayList<>();
-    Player player;
-    Image background, newGame;
-    HealthBar healthBar;
-    PImage rocketImg, enemyImg;
-    int gameState;
-    double score, time, hitScore, powerTime;
+    public Minim loader = new Minim(this);
+    public AudioPlayer gameBgm, homeBgm, gameOverSound;
+    public DecimalFormat df = new DecimalFormat("#.0");
+    public ArrayList<Enemy> enemies = new ArrayList<>();
+    public ArrayList<Rocket> rockets = new ArrayList<>();
+    public ArrayList<Image> startScreen = new ArrayList<>();
+    public ArrayList<Image> playScreen = new ArrayList<>();
+    public ArrayList<Image> deathScreen = new ArrayList<>();
+    public Player player;
+    public Image background, newGame;
+    public HealthBar healthBar;
+    public PImage rocketImg, enemyImg;
+    public int gameState;
+    public double score, time, hitScore, powerTime;
 
 
     public void settings() {
-        size(640, 640);
-        frameRate = 60;
+        size(MainSettings.WINDOW_WIDTH, MainSettings.WINDOW_HEIGHT);
+        frameRate = MainSettings.FRAME_RATE;
     }
 
     public void setup() {
-        gameState = 0;
+        gameState = MainSettings.INITIAL_GAME_STATE;
         player = new Player(this);
         background = new Image(0, -640, 640, 1280, loadImage("Images/Space_Background.png"));
         newGame = new Image(width/2 - 125, height * 3/4, 250, 50, loadImage("Images/Interactives/New_Game.png"));
@@ -56,9 +60,9 @@ public class Main extends PApplet {
         deathScreen.add(newGame);
         deathScreen.add(new Image(width/2 - 150, height/2 - 50, 300, 100, loadImage("Images/Non-Interactives/Game_Over.png")));
 
-        score = 0.00;
-        time = 0.00;
-        hitScore = 0.0;
+        score = MainSettings.INITIAL_SCORE;
+        time = MainSettings.INITIAL_TIME;
+        hitScore = MainSettings.INITIAL_HIT_SCORE;
         textSize(20);
         fill(255);
 
@@ -69,12 +73,12 @@ public class Main extends PApplet {
     }
 
     public void draw() {
-        if (gameState == 0) {
+        if (gameState == MainSettings.START_SCREEN_STATE) {
             startScreen.forEach(img -> img.draw(this));
             text("TO MOVE", 120, 75);
             text("TO FIRE", 530, 80);
             bgAction();
-        } else if (gameState == 1) {
+        } else if (gameState == MainSettings.PLAYING_GAME_STATE) {
             playScreen.forEach(img -> img.draw(this));
             for (int i = 0; i < rockets.size(); i++) {
                 rockets.get(i).draw(this, i);
@@ -85,16 +89,20 @@ public class Main extends PApplet {
             bgAction();
             spawnEnemies();
             keyPressed();
-            time = time + 1.0 / 60;
-            score = hitScore - time;
-            if (score < 0) {
-                score = 0;
-            }
-            text("Score: " + Double.valueOf(df.format(score)), 10, 20);
-        } else if (gameState == 2) {
+            scoreActions();
+        } else if (gameState == MainSettings.GAME_OVER_STATE) {
             background(0);
             deathScreen.forEach(img -> img.draw(this));
         }
+    }
+
+    public void scoreActions() {
+        time = time + 1.0 / 60;
+        score = hitScore - time;
+        if (score < 0) {
+            score = 0;
+        }
+        text("Score: " + Double.valueOf(df.format(score)), 10, 20);
     }
 
     public void bgAction() {

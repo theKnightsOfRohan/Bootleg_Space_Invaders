@@ -7,16 +7,18 @@ import v2.Main;
 public class Enemy extends Image {
     int speed;
 
-    
     public Enemy(PImage img) {
-        super((int)(Math.random() * 576), (int)(Math.random() * -100) - 64, 64, 64, img);
+        super((int) (Math.random() * 576), (int) (Math.random() * -100) - 64, 64, 64, img);
         this.speed = (int) (Math.random() * 5) + 5;
     }
 
     public void draw(Main main) {
         this.move();
-        if (this.isTouching(main.player)) this.hitsPlayer(main);
-        for (int i = 0; i < main.rockets.size(); i++) if (this.isTouching(main.rockets.get(i))) this.hitsRocket(main, i);
+        if (this.isTouching(main.player))
+            this.hitsPlayer(main);
+        for (int i = 0; i < main.rockets.size(); i++)
+            if (this.isTouching(main.rockets.get(i)))
+                this.hitsRocket(main, i);
         main.image(this.img, this.x, this.y);
     }
 
@@ -52,7 +54,7 @@ public class Enemy extends Image {
     }
 
     public void respawn() {
-        this.y = (int)(Math.random() * -100) - 64;
-        this.x = (int)(Math.random() * 576);
+        this.y = (int) (Math.random() * -100) - 64;
+        this.x = (int) (Math.random() * 576);
     }
 }

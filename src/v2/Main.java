@@ -27,7 +27,6 @@ public class Main extends PApplet {
     public int gameState;
     public double score, time, hitScore, powerTime;
 
-
     public void settings() {
         size(MainSettings.WINDOW_WIDTH, MainSettings.WINDOW_HEIGHT);
         frameRate = MainSettings.FRAME_RATE;
@@ -37,18 +36,19 @@ public class Main extends PApplet {
         gameState = MainSettings.INITIAL_GAME_STATE;
         player = new Player(this);
         background = new Image(0, -640, 640, 1280, loadImage("Images/Space_Background.png"));
-        newGame = new Image(width/2 - 125, height * 3/4, 250, 50, loadImage("Images/Interactives/New_Game.png"));
+        newGame = new Image(width / 2 - 125, height * 3 / 4, 250, 50, loadImage("Images/Interactives/New_Game.png"));
         healthBar = new HealthBar(new PImage[] {
-            loadImage("Images/Interactives/Full_Health.png"),
-            loadImage("Images/Interactives/3:4_Health.png"),
-            loadImage("Images/Interactives/1:2_Health.png"),
-            loadImage("Images/Interactives/1:4_Health.png")
+                loadImage("Images/Interactives/Full_Health.png"),
+                loadImage("Images/Interactives/3:4_Health.png"),
+                loadImage("Images/Interactives/1:2_Health.png"),
+                loadImage("Images/Interactives/1:4_Health.png")
         });
         rocketImg = loadImage("Images/Sprites/Rocket_Sprite.png");
         enemyImg = loadImage("Images/Sprites/Enemy_Ship.png");
-        
+
         startScreen.add(background);
-        startScreen.add(new Image(width/2 - 150, height/2 - 120, 300, 120, loadImage("Images/Non-Interactives/Title_Text.png")));
+        startScreen.add(new Image(width / 2 - 150, height / 2 - 120, 300, 120,
+                loadImage("Images/Non-Interactives/Title_Text.png")));
         startScreen.add(new Image(10, 10, 100, 60, loadImage("Images/Non-Interactives/Arrow_Image.png")));
         startScreen.add(new Image(20, 70, 80, 50, loadImage("Images/Non-Interactives/WASD.png")));
         startScreen.add(new Image(450, 10, 90, 100, loadImage("Images/Non-Interactives/Mouse_Image.png")));
@@ -58,7 +58,8 @@ public class Main extends PApplet {
         playScreen.add(healthBar);
         playScreen.add(player);
         deathScreen.add(newGame);
-        deathScreen.add(new Image(width/2 - 150, height/2 - 50, 300, 100, loadImage("Images/Non-Interactives/Game_Over.png")));
+        deathScreen.add(new Image(width / 2 - 150, height / 2 - 50, 300, 100,
+                loadImage("Images/Non-Interactives/Game_Over.png")));
 
         score = MainSettings.INITIAL_SCORE;
         time = MainSettings.INITIAL_TIME;
@@ -121,7 +122,8 @@ public class Main extends PApplet {
     public void mouseReleased() {
         switch (gameState) {
             case 0:
-                if (mouseX >= newGame.x && mouseX <= newGame.x + newGame.w && mouseY >= newGame.y && mouseY <= newGame.y + newGame.h) {
+                if (mouseX >= newGame.x && mouseX <= newGame.x + newGame.w && mouseY >= newGame.y
+                        && mouseY <= newGame.y + newGame.h) {
                     switchToPlay();
                 }
                 break;
@@ -129,7 +131,8 @@ public class Main extends PApplet {
                 rockets.add(new Rocket(player.x + 14, player.y - 32, rocketImg));
                 break;
             case 2:
-                if (mouseX >= newGame.x && mouseX <= newGame.x + newGame.w && mouseY >= newGame.y && mouseY <= newGame.y + newGame.h) {
+                if (mouseX >= newGame.x && mouseX <= newGame.x + newGame.w && mouseY >= newGame.y
+                        && mouseY <= newGame.y + newGame.h) {
                     switchToPlay();
                 }
                 break;
@@ -139,13 +142,15 @@ public class Main extends PApplet {
     public void keyReleased() {
         switch (gameState) {
             case 0:
-                if (key == ' ') switchToPlay();
+                if (key == ' ')
+                    switchToPlay();
                 break;
             case 1:
                 keyCode = 0;
                 break;
             case 2:
-                if (key == ' ') switchToPlay();
+                if (key == ' ')
+                    switchToPlay();
                 break;
         }
     }

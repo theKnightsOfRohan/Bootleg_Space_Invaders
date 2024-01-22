@@ -5,7 +5,7 @@ import processing.core.PImage;
 public class Image {
     public int x, y, w, h;
     public PImage img;
-    
+
     public Image(int x, int y, int w, int h, PImage img) {
         this.x = x;
         this.y = y;

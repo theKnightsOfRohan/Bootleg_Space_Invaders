@@ -7,7 +7,8 @@ public class Player extends Image {
     int speed, health;
 
     public Player(Main main) {
-        super(main.width/2 - 25, main.height - 70, PlayerSettings.WIDTH, PlayerSettings.HEIGHT, main.loadImage("Images/Sprites/Player_Spaceship.png"));
+        super(main.width / 2 - 25, main.height - 70, PlayerSettings.WIDTH, PlayerSettings.HEIGHT,
+                main.loadImage("Images/Sprites/Player_Spaceship.png"));
         this.speed = PlayerSettings.INITIAL_SPEED;
     }
 
@@ -40,7 +41,7 @@ public class Player extends Image {
     }
 
     public void reset(Main main) {
-        this.x = main.width/2 - 25;
+        this.x = main.width / 2 - 25;
         this.y = main.height - 70;
     }
 }
